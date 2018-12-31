@@ -264,7 +264,7 @@ saveInfo
 				movea.l	saveArea(a1),a1					; get the handle
 				movea.l	(a1),a1							; (destination) get pointer heap block
 				movea.l	sp,a0							; (source) get pointer to stacked info
-				_BlockMoveData							; copy the data
+				_BlockMove								; copy the data
 
 ; cleanup up and leave
 leaveNow
@@ -287,8 +287,8 @@ dummyvbl		PROC	EXPORT
 ; save_lmemtab.  Copy the switchable lomem into a safe area.
 save_lmemtab	PROC	EXPORT
 				IMPORT	(switchTabPtr, blockTrapAddr):DATA
-SaveRegs		REG		a2-a4/d1-d2
-SaveRegSize		EQU		5*4
+SaveRegs		REG		a2-a4/d2
+SaveRegSize		EQU		4*4
 
 				movem.l	SaveRegs,-(sp)					; save work registers
 				move.l	SaveRegSize+4(sp),a4			; get pointer to PCB storage
@@ -344,16 +344,13 @@ SaveOneLoop
 ;	to calling the BlockMove routine directly.  However, set up D1 so that the caches
 ;	still don’t get flushed.  We still want to call the trap for PsychicTV however, so
 ;	that the emulator can do it’s native BlockMove.
+;
+; <21C> Roll back the clever change, just call a3 directly
 
 UseBlockMove		
 				move.l	a4,a1							; a1 = destination
 				add.l	d0,a4							; update our storage address
-	if not(PsychicTV) then
-				move.w	#$A22E,d1						; <8>
 				jsr		(a3)
-	else
-				_BlockMove								; <8>
-	endif
 				
 				bra.s	SaveAllLoop						; now get next entry
 
@@ -368,8 +365,8 @@ AllSaved
 ; restore_lmemtab.  Copy the saved switchable lomem back into lomem.
 restore_lmemtab	PROC	EXPORT
 				IMPORT	(switchTabPtr, blockTrapAddr):DATA
-SaveRegs		REG		a2-a4/d1-d2
-SaveRegSize		EQU		5*4
+SaveRegs		REG		a2-a4/d2
+SaveRegSize		EQU		4*4
 
 				movem.l	SaveRegs,-(sp)					; save work registers
 				move.l	SaveRegSize+4(sp),a4			; get pointer to PCB storage
@@ -425,16 +422,12 @@ RestoreOneLoop
 ;	still don’t get flushed.  We still want to call the trap for PsychicTV however, so
 ;	that the emulator can do it’s native BlockMove.
 ;
+; <21C> Roll back the clever change, just call a3 directly
 
 UseBlockMove		
 				move.l	a4,a0							; setup source pointer for blockmove
 				add		d0,a4							; and increment pointer by count
-	if not(PsychicTV) then
-				move.w	#$A22E,d1						; <8>
 				jsr		(a3)
-	else
-				_BlockMove								; <8>
-	endif
 				
 				bra.s	RestoreAllLoop					; now get next entry
 		

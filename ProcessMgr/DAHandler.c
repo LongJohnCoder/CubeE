@@ -70,7 +70,6 @@
 #include <osutils.h>
 #include <segload.h>
 #include <diskinit.h>
-#include <sound.h>
 #include <GestaltEqu.h>
 #include <Palettes.h>
 #include <Icons.h>

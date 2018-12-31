@@ -17,8 +17,8 @@
 
 //	Version Resource
 
-	resource 'vers' (1) {
-		LIntVers, LangInt, SysVersion, SysVersion", © Apple Computer, Inc. 1983-1992"
-	};
+	//resource 'vers' (1) {
+	//	LIntVers, LangInt, SysVersion, SysVersion", © Apple Computer, Inc. 1983-1992"
+	//};
 
 IncSys	"Scheduler.rsrc" 'scod';
