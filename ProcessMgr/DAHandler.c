@@ -508,7 +508,7 @@ InitConfig(void)
 	Colorized = false;
 	Has32BitQD = false;
 	
-	if (Gestalt(gestaltQuickdrawVersion,&qdInfo) == noErr)
+	if (MyGestalt(gestaltQuickdrawVersion,&qdInfo) == noErr)
 		{
 		qdInfo &= 0xFFFF;
 		Colorized = (qdInfo >= gestalt8BitQD);
