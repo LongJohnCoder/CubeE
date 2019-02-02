@@ -819,7 +819,7 @@
 
 //__________________________________________________________________________________________________
 // version
-
+#define SysVersion "7"
 	#define VersionString \
 		"Macintosh System version " SysVersion "\n\n\n" \
 		"© Apple Computer, Inc. 1983-1991\n" \
@@ -827,9 +827,9 @@
 
 	resource 'STR ' (0) { VersionString };
 
-	resource 'vers' (1) {
-		LIntVers, LangInt, SysVersion, SysVersion", © Apple Computer, Inc. 1983-1991"
-	};
+//	resource 'vers' (1) {
+//		LIntVers, LangInt, SysVersion, SysVersion", © Apple Computer, Inc. 1983-1991"
+//	};
 
 	resource 'BNDL' (0) {
 		'MACS', 0, {
@@ -953,7 +953,7 @@
 	// Picasso Macintosh icon (loaded by System Error Handler)
 
 	resource 'cicn' (-16396, purgeable) {
-		{0, 0, 32, 32}, 4,			// bounds, bits per pixel
+		4, {0, 0, 32, 32}, 4,			// bounds, bits per pixel
 	// mask
 		$"0007FF80 00080000 00087E20 00080120"
 		$"00080120 04080120 0C080120 08080120"
@@ -1118,18 +1118,20 @@
 
 	IncSys "BeforePatches.a.rsrc" codeAs 'PTCH' (0, sysHeap, locked);
 
+/*
 	IncSys "PatchPlusROM.a.rsrc" codeAs 'PTCH' (MacPlus, sysHeap, locked);
 	IncSys "PatchSEROM.a.rsrc" codeAs 'PTCH' (MacSE, sysHeap, locked);
 	IncSys "PatchIIROM.a.rsrc" codeAs 'PTCH' (MacII, sysHeap ,locked);
 	IncSys "PatchPortableROM.a.rsrc" codeAs 'PTCH' (Portable, sysHeap, locked);
 	IncSys "PatchIIciROM.a.rsrc" codeAs 'PTCH' (Mac32, sysHeap, locked);
+*/
 
 //__________________________________________________________________________________________________
 // INITs
 
 	IncSys "ParityINIT.a.rsrc" codeAs 'INIT' (10, sysHeap, locked);
 
-	IncSys "EDiskShutdownPtch.a.rsrc" codeAs 'INIT' (12, sysHeap, locked);
+//	IncSys "EDiskShutdownPtch.a.rsrc" codeAs 'INIT' (12, sysHeap, locked);
 	
 	
 	resource 'mcky' (0, sysHeap, purgeable) { { 255, 255, 255, 255, 255, 255, 255, 255 } };
@@ -1151,7 +1153,7 @@
 //__________________________________________________________________________________________________
 // Alias Mgr (includes Folder Mgr)
 
-	IncSys "AliasMgr.rsrc";
+//	IncSys "AliasMgr.rsrc";
 
 // Folder Mgr folder list
 	resource 'fld#' (0, sysHeap, purgeable) { {
@@ -1168,8 +1170,8 @@
 //__________________________________________________________________________________________________
 // AppleTalk
 
-	// AppleTalk 58 resources
- 	include $$Shell("Misc")"APTK58.rsrc" not 'ckid';
+	// AppleTalk 57 resources
+ 	include $$Shell("Misc")"APTK57.0.4.rsrc" not 'ckid';
 	
 	// ^^ incorporates the following:
 	// IncSys "AppleTalk.rsrc" not 'vers';
@@ -1246,7 +1248,7 @@
 //__________________________________________________________________________________________________
 // Backlight Driver
 
-	IncSys "Backlight.rsrc" not 'vers';
+//	IncSys "Backlight.rsrc" not 'vers';
 
 //__________________________________________________________________________________________________
 // BitEdit
@@ -1333,7 +1335,7 @@ resource 'PICT' (-16387) {
 	IncSys 	"Choose.r.rsrc" 'CNTL' (CTB_ChooseCNTLID) as 'CNTL' (CTB_ChooseCNTLID, sysHeap, purgeable);
 	IncSys 	"Choose.r.rsrc" 'MENU' (CTB_ChooseMENUID) as 'MENU' (CTB_ChooseMENUID, sysHeap);
 
-	IncSys 	"StandardNBP.p.rsrc" codeAs CTB_NuLookupType (CTB_NuLookupID, sysHeap, purgeable, locked);
+//	IncSys 	"StandardNBP.p.rsrc" codeAs CTB_NuLookupType (CTB_NuLookupID, sysHeap, purgeable, locked);
 	IncSys 	"StandardNBPHelp.r.rsrc" 'hdlg' (CTB_NulookuphdlgID) as 'hdlg' (CTB_NulookuphdlgID, sysHeap, purgeable);
 	IncSys 	"StandardNBP.r.rsrc" 'DLOG' (CTB_NulookupDLOGID) as 'DLOG' (CTB_NulookupDLOGID, sysHeap, purgeable);
 	IncSys 	"StandardNBP.r.rsrc" 'DITL' (CTB_NulookupDITLID) as 'DITL' (CTB_NulookupDITLID, sysHeap, purgeable);
@@ -1954,7 +1956,7 @@ resource 'STR#' (glyphNameResID, purgeable) { {
 //__________________________________________________________________________________________________
 // Gestalt
 
-	IncSys "Gestalt.rsrc" codeAs 'ptch' (5, sysHeap, locked);
+//	IncSys "Gestalt.rsrc" codeAs 'ptch' (5, sysHeap, locked);
 
 //__________________________________________________________________________________________________
 // pslt • Nubus pseudo-slot mapping definitions
@@ -2093,7 +2095,7 @@ resource 'pslt' (gestaltEclipse33, purgeable) {
 //__________________________________________________________________________________________________
 // Icon Utilities
 
-	IncSys "IconUtils.rsrc";
+//	IncSys "IconUtils.rsrc" // this somehow survives as a linked patch -- how, I cannot say
 	IncSys "GenericIcons.rsrc";
 
 //__________________________________________________________________________________________________
@@ -2121,14 +2123,10 @@ resource 'pslt' (gestaltEclipse33, purgeable) {
 
 	IncSys "International.rsrc" 'kcs#' (0) as 'kcs#' (0, sysHeap, purgeable);
 	IncSys "International.rsrc" 'kcs4' (0) as 'kcs4' (0, sysHeap, purgeable);
-	IncSys "International.rsrc" 'kcs8' (0) as 'kcs8' (0, sysHeap, purgeable);
 	IncSys "International.rsrc" 'kcs#' (-16491) as 'kcs#' (-16491, sysHeap, purgeable);
 	IncSys "International.rsrc" 'kcs4' (-16491) as 'kcs4' (-16491, sysHeap, purgeable);
-	IncSys "International.rsrc" 'kcs8' (-16491) as 'kcs8' (-16491, sysHeap, purgeable);
 	IncSys "International.rsrc" 'STR#' (-16491) as 'STR#' (-16491, sysHeap, purgeable);
 	IncSys "International.rsrc" 'hmnu' (-16491) as 'hmnu' (-16491, sysHeap, purgeable);	// Keyboard menu help strings	<185>
-	IncSys "International.rsrc" 'DLOG' (-16491) as 'DLOG' (-16491, sysHeap, purgeable);	// About Keyboards…				<208>
-	IncSys "International.rsrc" 'DITL' (-16491) as 'DITL' (-16491, sysHeap, purgeable);	// About Keyboards…				<208>
 	IncSys "International.rsrc" 'DLOG' (-16492) as 'DLOG' (-16492, sysHeap, purgeable);	// About Keyboards…				<208>
 	IncSys "International.rsrc" 'DITL' (-16492) as 'DITL' (-16492, sysHeap, purgeable);	// About Keyboards…				<208>
 
@@ -2541,20 +2539,13 @@ resource 'ppci' (-16409)
 	IncSys "DAHandler.rsrc";
 
 //__________________________________________________________________________________________________
-// SANE
-
-	IncSys "FPHW.rsrc" 'RSRC' (0) as 'PACK' (4, sysHeap, locked);
-	IncSys "ElemsHW.rsrc" 'RSRC' (0) as 'PACK' (5, sysHeap, locked);
-
-
-//__________________________________________________________________________________________________
 // QuickDraw
 
 	resource 'STR ' (-16454, locked) { "8•24 GC" };	// name of the Tiburon patch file
 
 	IncSys "QDciPatchROM.a.rsrc" codeAs 'ptch' (26, sysHeap, locked);
 	IncSys "QuickDrawPatchII.rsrc" codeAs 'ptch' (32, sysHeap, locked);	 // 32-Bit QuickDraw
-	IncSys "PictUtilities.rsrc" codeAs 'PACK' (15, sysHeap, purgeable);
+//	IncSys "PictUtilities.rsrc" codeAs 'PACK' (15, sysHeap, purgeable);
 
 // 8 standard QuickDraw colors
 	resource 'clut' (127, sysHeap) { {
@@ -2983,7 +2974,7 @@ resource 'ppci' (-16409)
 	IncSys "SoundPFDProc.rsrc" codeAs 'proc' (-16498, sysHeap, purgeable, locked);
 	IncSys "SoundInputProc.rsrc" codeAs 'proc' (-16497, sysHeap, purgeable, locked);
 	IncSys "Meter.c.rsrc" codeAs 'CDEF' (62, sysHeap, purgeable);
-	IncSys "SinHighLevel.rsrc";
+	// IncSys "SinHighLevel.rsrc";//Elliot still not sure what this is!!
 
 	IncSys "Note.c.rsrc" codeAs 'snth' (2049, sysHeap, purgeable, locked);
 	IncSys "Wave.c.rsrc" codeAs 'snth' (2051, sysHeap, purgeable, locked);
@@ -3003,11 +2994,11 @@ resource 'ppci' (-16409)
 //__________________________________________________________________________________________________
 // Video
 
-	IncSys "TFBDriver.a.rsrc" codeAs 'DRVR' (120, ".Display_Video_Apple_TFB", sysHeap, purgeable);
+//	IncSys "TFBDriver.a.rsrc" codeAs 'DRVR' (120, ".Display_Video_Apple_TFB", sysHeap, purgeable);
 
 // Mac IIci (and Erickson, actually) video extension
 
-	IncSys "BuiltInVideoExtension.p.rsrc" codeAs 'mntr' (-4096, purgeable);
+//	IncSys "BuiltInVideoExtension.p.rsrc" codeAs 'mntr' (-4096, purgeable);
 
 
 	// Translation strings for the various Apple Built-In Video names
@@ -3155,7 +3146,7 @@ data 'ppat' (18, sysheap, purgeable) {
 // color desktop pattern = dithered gray
 	resource 'ppat' (16, sysHeap, purgeable) {
 		$"AA55AA55AA55AA55",			// black & white pattern
-		{0, 0, 8, 8}, 4,				// bounds, bits per pixel
+		4, {0, 0, 8, 8}, 4,				// bounds, bits per pixel
 	// 4-bit color image
 		$"10101010"
 		$"01010101"
@@ -3529,7 +3520,7 @@ data 'ppat' (18, sysheap, purgeable) {
 // Apple Event Mgr
 
 #if hasAppleEventMgr
-	IncSys "AppleEventMgr.rsrc";
+//	IncSys "AppleEventMgr.rsrc";
 #endif
 
 //__________________________________________________________________________________________________
