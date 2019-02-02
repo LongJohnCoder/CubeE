@@ -119,7 +119,7 @@ GetCCursor	PROC	EXPORT
 			MOVE	4(SP),D0				; get the cursor's resource ID
 			MOVE.L	#'crsr',D1				; get the desired resource type
 			MOVEQ	#CRSRRec,D2				; get size of cursor record
-			JMP		PATSHARE
+			BRA.S	PATSHARE
 			NOP								; silence the assembler <13>
 
 

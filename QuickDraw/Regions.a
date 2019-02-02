@@ -259,10 +259,8 @@ VARSIZE		EQU		BBOX					;SIZE OF LOCALS
 		PEA		BBOX(A6)					;PUSH SRCRECT
 		CLR.L	-(SP)						;NO MASKRECT
 		PEA		BBOX(A6)					;PUSH DSTRECT
-		MOVE	MODE(A6),D1					;PUSH MODE										; <SM4>
-		OR		#$8,D1						;set the pattern bit in case the user forgot to	; <SM4>
-		_GetStreamMode						;strip mode										; <SM4>
-		MOVE.W	D1,-(SP)					;save stripped mode								; <SM4>
+		MOVE	MODE(A6),-(SP)				;PUSH MODE
+		OR		#$8,(SP)					;set the pattern bit in case the user forgot to
 		MOVE.L	PAT(A6),-(SP)				;PUSH PAT
 		MOVE.L	CLIPRGN(A1),-(SP)			;PUSH CLIPRGN
 		MOVE.L	VISRGN(A1),-(SP)			;PUSH VISRGN

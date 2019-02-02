@@ -356,9 +356,6 @@ ScaleColorBit	EQU		3
 		dbne	d0,@1
 		bne.s	@ScaleOK					;tables are not equal so perform pixel scaling
 
-		Bclr	#ScaleColorBit,XlateFlag+1(a6)	; •••  We are not scaling and it's an idendity map,
-												; •••  so set this bit for the callee
-
 ;if we installed a proc get rid of it before short circuiting stretch
 	
 		TST		D7							;DID WE INSTALL A PROC
@@ -2346,11 +2343,6 @@ scIndtoInd
 		
 		move.l	scaleTbl(a6),a3		;set this up once
 		
-		swap	d4					;use high word						<SM7>
-		move.w	srcShift(a6),d4		;calculate the difference of		<SM7>
-		sub.w	dstShift(a6),d4		;source and destination bit shifts	<SM7>
-		swap	d4					;use low word						<SM7>
-
 		lea		@first,a0			;go here from now on
 		move.l	A3,scaleBltA3(a6)	;save for reload after seekMask
 		move.l	a0,ScaleCase(a6)	;remember for later
@@ -2403,19 +2395,6 @@ scIndtoInd
 		swap	d7				;get shift
 		lsl.w	d7,d5			;make into bit skip
 		swap	d7				;put shift back
-		swap	d4				;get bit shift difference				<SM7>
-		tst.w	d4				;shift left or right?					<SM7>
-		bmi.s	@shiftRight		;shift right							<SM7>
-		lsl.w	d4,d0			;convert dst alignment to src alignment	<SM7>
-		bra.s	@afterShift		;										<SM7>
-@shiftRight						;										<SM7>
-		neg.w	d4				;get absolute value						<SM7>
-		lsr.w	d4,d0			;convert dst alignment to src alignment	<SM7>
-		neg.w	d4				;revert shift difference value			<SM7>
-@afterShift						;										<SM7>
-		swap	d4				;get dst pixel size						<SM7>
-		sub.w	d0,d5			;subtract								<SM7>
-		move.w	#0,d0			;no dst alignment						<SM7>
 		add.w	d5,d6			;bump src offset
 		move.w	d6,d5			;make a copy							
 		and.w	#$1f,d6			;make offset mod 32

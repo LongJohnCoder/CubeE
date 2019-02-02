@@ -4109,15 +4109,6 @@ rslowHilite
 
 rTransparent
 rTransparentIndexed
-		TST.L	D3						;right to left?									<sm 6/9/92>stb
-		BMI.S	@1						;if so, skip									<sm 6/9/92>stb
-		CMP.W	#8,DSTPIX+PIXELSIZE(A6)	;is it 8 bit mode?								<sm 6/9/92>stb
-		BEQ		rTransparent8			;yes, go use quickdraw							<sm 6/9/92>stb
-									; if it is, go use Andy’s QuickerDraw special 8-bit case
-									; which doesn’t have this problem					<sm 6/9/92>stb
-	@1:	LEA		@RealrTransparent,A0; this fixes a bug that the optimization introduced	<sm 6/9/92>stb
-		MOVE.L	A0,ModeCase(A6)		; which was causing the loss of pattern data		<sm 6/9/92>stb
-@RealrTransparent
 		MOVE	patHMask(A6),D1		;set up source constriction
 		MOVE 	pixInLong1(A6),A0	;set up absolute long bump
 		MOVE	longBump(A6),A2		;set up long bump

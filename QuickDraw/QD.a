@@ -131,6 +131,7 @@ WholeErrors 	EQU 1
 			INCLUDE		'qdHooks.a'
 			INCLUDE 	'fontPrivate.a'
 				 
+			INCLUDE		'CrsrDevEqu.a'
 			INCLUDE 	'colorequ.a'
 			INCLUDE		'SlotMgrEqu.a'
 			INCLUDE		'ROMEqu.a'
